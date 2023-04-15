@@ -10,6 +10,7 @@ const sidebarConfig = [
     subheader: '',
     items: [
       { title: 'Mint Signage', path: '/owner/mint', icon: <Iconify icon="material-symbols:dashboard-rounded"/> },
+    
     ],
   },
 

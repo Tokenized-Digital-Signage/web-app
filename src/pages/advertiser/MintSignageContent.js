@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useConnect, useAccount } from 'wagmi'
 import { Navigate } from 'react-router-dom';
-import Page from '../../components/Page';
+
 
 //---------------------WorldCoin
 import { CredentialType, IDKitWidget } from "@worldcoin/idkit"
@@ -18,6 +18,7 @@ const MintSignageContent = () => {
   const { isConnected, address } = useAccount(); 
   const [formData, setFormData] = useState({uri: ''});
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
 
   const handleProof = result => {
@@ -27,29 +28,40 @@ const MintSignageContent = () => {
   }
 
   const onSuccess = result => {
-    console.log(result)
-    if(result !== null){
-      setData(result)
+    const resultUpdate = result
+    if(resultUpdate !==null) {
+      setData(resultUpdate)
     }
-    console.log(data)
+    
   }
 
-  async function Mint(e, result) {
+  async function Mint(e) {
 
     e.preventDefault();
+    console.log(data)
     
-    const decodedProof = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], result.proof)[0];
+    try{
+
+    setLoading(true)
+    const proof = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], data.proof)[0];
     const signal = process.env.REACT_APP_WORLD_COIN_SIGNAL;
-    const root = result.merkle_root;
-    const nullifierHash = result.nullifier_hash;
+    const root = data.merkle_root;
+    const nullifierHash = data.nullifier_hash;
     const userAddress = address;
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(process.env.REACT_APP_SIGNAGE_CONTRACT_ADDRESS, ABIS, signer);
-    const verifyAndExecute = await contract.verifyAndExecute(signal, root, nullifierHash, decodedProof, userAddress, formData.uri);
+    const verifyAndExecute = await contract.verifyAndExecute(signal, root, nullifierHash, proof, userAddress, formData.uri);
     const receipt = await verifyAndExecute.wait();
     console.log(receipt);
+
+    setLoading(false)
+
+  } catch (e) {
+    console.log(e)
+    setLoading(false)
+  }
   }
   
   const urlParams = new URLSearchParams(window.location.search);
@@ -67,14 +79,15 @@ const MintSignageContent = () => {
 
   return (
    
-    <Card>
+    <Card sx={{ p: 3, boxShadow: 3 }}>
       <Typography variant="subtitle1" gutterBottom>
         Verfiy and Upload Content
       </Typography>
 
 
-      
+      {data === null ?
       <IDKitWidget
+      style={{zIndex: 9999}}
         action={action}
         signal={process.env.REACT_APP_WORLD_COIN_SIGNAL}
         onSuccess={onSuccess}
@@ -84,6 +97,8 @@ const MintSignageContent = () => {
       >
         {({ open }) => <Button variant="outlined" onClick={open}>Verify</Button>}
       </IDKitWidget>
+      :
+      null}
      
 
       {data && data !== null ?
@@ -104,7 +119,8 @@ const MintSignageContent = () => {
         <Stack direction="row" spacing={1.5}>
  
           <>
-            <Button variant="outlined" type="submit">Mint</Button>
+          {loading === true ? <> <Button variant="contained" size="large" disabled>Minting...</Button></> : 
+            <Button  variant="contained" size="large" type="submit">Mint</Button> }
           </>
         </Stack>
         </form>

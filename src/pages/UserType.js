@@ -40,15 +40,15 @@ const UserType = () => {
 
 
          
-          <Typography variant="h3" >I am a</Typography>
+          <Typography variant="h3" >I am </Typography>
           <Typography sx={{mb: 5}}>(Choose your role to connect)</Typography>
 
               <Button component={RouterLink} variant="outlined" size="large" sx={{mr: 2}} to="/advertiser">
-                Advertiser
+                An Advertiser
               </Button>
 
               <Button component={RouterLink} variant="outlined" size="large" sx={{mr: 2}} to="/owner">
-                Signage Owner
+                A Signage Owner
               </Button>
 
            </Box>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 //Wagmi
 import { useConnect, useAccount } from 'wagmi'
 
@@ -7,9 +7,12 @@ import Page from '../../components/Page'
 //hooks
 import useResponsive from '../../hooks/useResponsive';
 //mui
-import { Container, Box, Button } from '@mui/material';
+import { Container, Box, Button, Typography } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import { ethers } from "ethers";
+//-------------ABIS
+import ABIS from '../../abis/ABIS.json';
 
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -23,6 +26,30 @@ const RootStyle = styled('div')(({ theme }) => ({
 const MintSignage = () => {
 
   const { isConnected, address } = useAccount(); 
+  
+  //Random Int
+
+  
+  async function MintSig(e, result) {
+
+    e.preventDefault();
+
+    //-------------Id
+    
+   const uniqueId = (length=16) => {
+      return parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(length).toString().replace(".", ""))
+    }
+
+    const uniqueID = uniqueId() 
+ 
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(process.env.REACT_APP_SIGNAGE_CONTRACT_ADDRESS_Owner, ABIS, signer);
+    const mintSig = await contract.verifyAndExecute(uniqueID, address);
+    const receipt = await mintSig.wait();
+    console.log(receipt);
+  }
 
   if (!isConnected) {
     return <Navigate to="/" />;
@@ -30,8 +57,10 @@ const MintSignage = () => {
   
   return (
     <Page title="Mint">
-      <RootStyle>
-        <Container>
+   
+        <Typography variant="h4" component="h1" paragraph sx={{mb: 5}}>
+          Mint an AD Spot
+        </Typography>
           
           
         <Box sx={{ maxWidth: 480, mx: 'auto', textAlign: 'center' }}>
@@ -40,8 +69,7 @@ const MintSignage = () => {
           <Button variant="outlined" size="large">Mint Signage</Button>
 
            </Box>
-        </Container>
-        </RootStyle>
+        
     </Page>
   )
 }

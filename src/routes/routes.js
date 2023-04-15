@@ -3,11 +3,12 @@ import React from 'react'
 import { useRoutes } from 'react-router-dom';
 import DashboardLayout from '../layouts/dashboard'
 import DashboardLayoutOwner from '../layouts/dashboardOwner'
-import MintSignageContent from '../pages/advertiser/MintSignageContent'
 import Connect from '../pages/Connect';
 import UserType from '../pages/UserType';
 import MintSignage from '../pages/owner/MintSignage';
 import ConnectOwner from '../pages/ConnectOwner';
+import LinkSignage from '../pages/advertiser/LinkSignage';
+import MintSignangeMain from '../pages/advertiser/MintSignangeMain';
     
 export default function Router() {
       return useRoutes([
@@ -16,9 +17,12 @@ export default function Router() {
             element: <DashboardLayout />,
             children: [
                 {
-                    path: '/advertiser/mint', element: <MintSignageContent/>
+                    path: '/advertiser/mint', element: <MintSignangeMain />
                 },
-
+                {
+                  path: '/advertiser/link', element: <LinkSignage/>
+              },
+  
             ]
         },
 
@@ -28,7 +32,7 @@ export default function Router() {
               {
                   path: '/owner/mint', element: <MintSignage/>
               },
-
+  
           ]
       },
 
