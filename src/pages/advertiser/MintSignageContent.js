@@ -57,10 +57,11 @@ const MintSignageContent = () => {
     console.log(receipt);
 
     setLoading(false)
-
+    setFormData({uri: ''})
   } catch (e) {
     console.log(e)
     setLoading(false)
+    setFormData({uri: ''})
   }
   }
   
@@ -87,7 +88,7 @@ const MintSignageContent = () => {
 
       {data === null ?
       <IDKitWidget
-      style={{zIndex: 9999}}
+        style={{zIndex: 9999}}
         action={action}
         signal={process.env.REACT_APP_WORLD_COIN_SIGNAL}
         onSuccess={onSuccess}
@@ -106,7 +107,7 @@ const MintSignageContent = () => {
       <Stack spacing={3} sx={{mt: 2}}>
         
       <form onSubmit={Mint}>
-          <Box >
+          <Box sx={{mb: 3}}>
            
           <Grid container spacing={2} >
               <Grid item xs={12} >

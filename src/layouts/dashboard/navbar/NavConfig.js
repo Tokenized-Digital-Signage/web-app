@@ -9,8 +9,8 @@ const sidebarConfig = [
   {
     subheader: '',
     items: [
-      { title: 'Mint Content', path: '/advertiser/mint', icon: <Iconify icon="material-symbols:dashboard-rounded"/> },
-      { title: 'Link Ads spot', path: '/advertiser/link', icon: <Iconify icon="material-symbols:dashboard-rounded"/> },
+      { title: 'Mint Content', path: '/advertiser/mint', icon: <Iconify icon="gridicons:create"/> },
+      { title: 'Link Ads spot', path: '/advertiser/link', icon: <Iconify icon="material-symbols:link"/> },
     ],
   },
 

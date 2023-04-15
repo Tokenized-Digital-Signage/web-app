@@ -36,9 +36,11 @@ export default function LinkSignageForm() {
         console.log(receipt);
     
         setLoading(false)
+        setFormData({spot: '', content: ''})
       } catch {
         console.log(e)
         setLoading(false)
+        setFormData({spot: '', content: ''})
       }
       }
 

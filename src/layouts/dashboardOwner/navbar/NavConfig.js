@@ -9,7 +9,7 @@ const sidebarConfig = [
   {
     subheader: '',
     items: [
-      { title: 'Mint Signage', path: '/owner/mint', icon: <Iconify icon="material-symbols:dashboard-rounded"/> },
+      { title: 'Mint Signage', path: '/owner/mint', icon: <Iconify icon="streamline:shopping-store-signage-3-street-sandwich-shops-shop-stores-board-sign-store"/> },
     
     ],
   },
