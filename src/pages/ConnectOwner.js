@@ -20,18 +20,18 @@ const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
-const Connect = () => {
+const ConnectOwner = () => {
 
   const { isConnected } = useAccount(); 
   const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
   const isDesktop = useResponsive('up', 'md');
 
   if(isConnected) {
-    return <Navigate to="/advertiser/mint" />
+    return <Navigate to="/owner/mint" />
   }
 
   return (
-    <Page title="Connect">
+    <Page title="Signage Owner">
       <RootStyle>
         <Container>
           
@@ -92,4 +92,4 @@ const Connect = () => {
   )
 }
 
-export default Connect
+export default ConnectOwner
