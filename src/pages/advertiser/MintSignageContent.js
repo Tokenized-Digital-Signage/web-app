@@ -81,7 +81,7 @@ const MintSignageContent = () => {
    
     <Card sx={{ p: 3, boxShadow: 3 }}>
       <Typography variant="subtitle1" gutterBottom>
-        Verfiy and Upload Content
+        Please Verfiy to Upload Content
       </Typography>
 
 
@@ -109,7 +109,7 @@ const MintSignageContent = () => {
           <Box >
            
           <Grid container spacing={2} >
-              <Grid item xs={6} >
+              <Grid item xs={12} >
                   <TextField placeholder="Metadata URL" id="metadata" label="Metadata URL" variant="outlined" fullWidth required autoComplete='off' onChange={e => setFormData({...formData, uri: e.target.value})} value={formData.uri}/>
                 </Grid>
           </Grid>
