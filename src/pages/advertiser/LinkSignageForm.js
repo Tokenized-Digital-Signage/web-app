@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-//Wagmi
-import { useConnect, useAccount } from 'wagmi';
-import {Link as RouterLink} from 'react-router-dom';
+
 // @mui
 import { Button, Card, Typography, Stack, Grid, TextField  } from '@mui/material';
 
@@ -16,7 +14,7 @@ export default function LinkSignageForm() {
 
     const [formData, setFormData] = useState({spot: '', content: ''});
     const [loading, setLoading] = useState(false)
-
+    const [success, setSuccess] = useState(false);
 
 
     async function LinkSig(e) {
@@ -33,10 +31,12 @@ export default function LinkSignageForm() {
         const contract = new ethers.Contract('0x06C96F03934c7799FEae82f62F887BdC9dD5f1fE', ABIS2, signer);
         const mintSig = await contract.linkAdsSpotToContent(formData.spot, formData.content); //link spot content id
         const receipt = await mintSig.wait();
-        console.log(receipt);
+        if (receipt) {
+          setLoading(false);
+          setSuccess(true)
+        }
     
-        setLoading(false)
-        setFormData({spot: '', content: ''})
+        
       } catch {
         console.log(e)
         setLoading(false)
@@ -53,12 +53,20 @@ export default function LinkSignageForm() {
         Link you Ads to Signage 
       </Typography>
 
+      {success === true ? 
+
+  <Typography variant="h4" component="h1" paragraph sx={{mb: 5}}>
+      Linked Content ID: {formData.content} to AD Spot with ID: {formData.spot}
+  </Typography>
+
+  :
+
       <form onSubmit={LinkSig}>
       <Stack spacing={3} sx={{mt: 2}}>
         
          <Grid container spacing={2} >
               <Grid item xs={12} >
-                  <TextField type="number" placeholder="Spot Token ID" id="spotId" label="Spot Token ID" variant="outlined" fullWidth required autoComplete='off' onChange={e => setFormData({...formData, spot: e.target.value})} value={formData.spot}/>
+                  <TextField type="number" placeholder="AD Spot Token ID" id="spotId" label="Spot Token ID" variant="outlined" fullWidth required autoComplete='off' onChange={e => setFormData({...formData, spot: e.target.value})} value={formData.spot}/>
                 </Grid>
 
                 <Grid item xs={12} >
@@ -80,12 +88,13 @@ export default function LinkSignageForm() {
           Link
         </Button>
 
-}
+        }
           </>
           
         </Stack>
       </Stack>
       </form>
+    }
     </Card>
   );
 }

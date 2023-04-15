@@ -21,7 +21,7 @@ const MintSignageContent = () => {
   const [formData, setFormData] = useState({uri: ''});
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [success, setSuccess] = useState(false);
 
   const handleProof = result => {
     return new Promise(resolve => {
@@ -62,9 +62,12 @@ const MintSignageContent = () => {
     const verifyAndExecute = await contract.safeMintForDebugging(userAddress, formData.uri);
     const receipt = await verifyAndExecute.wait();
     
+    if (receipt) {
+      setLoading(false);
+      setSuccess(true);
+      setFormData({uri: ''})
+    }
 
-    setLoading(false)
-    setFormData({uri: ''})
   } catch (e) {
     console.log(e)
     setLoading(false)
@@ -88,6 +91,15 @@ const MintSignageContent = () => {
   return (
    
     <Card sx={{ p: 3, boxShadow: 3 }}>
+
+      {success === true ? 
+      <>
+      <Typography variant="subtitle1" gutterBottom>
+        Successfully Minted Signage Content !!
+      </Typography>
+      </> 
+      :
+      <>
       <Typography variant="subtitle1" gutterBottom>
         {data !== null ? <>Mint your Content for Signage</> : <>Please Verfiy to Upload Content</>}
       </Typography>
@@ -136,6 +148,8 @@ const MintSignageContent = () => {
       </>
       :null
       }
+      </>
+    }
     </Card>
    
   )
