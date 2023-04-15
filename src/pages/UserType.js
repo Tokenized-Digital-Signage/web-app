@@ -27,9 +27,7 @@ const UserType = () => {
   const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
   const isDesktop = useResponsive('up', 'md');
 
-  if(isConnected) {
-    return <Navigate to="/mint" />
-  }
+ 
 
   return (
     <Page title="UserType">
@@ -38,7 +36,7 @@ const UserType = () => {
           
         <Box sx={{ maxWidth: 480, mx: 'auto', textAlign: 'center' }}>
 
-
+          <Typography variant="h3" sx={{mb: 5, color: '#ff3c4b'}}>AdTokenVerse</Typography>
          
           <Typography variant="h3" >I am </Typography>
           <Typography sx={{mb: 5}}>(Choose your role to connect)</Typography>
