@@ -30,7 +30,7 @@ export default function LinkSignageForm() {
     
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-        const contract = new ethers.Contract(process.env.REACT_APP_SIGNAGE_CONTRACT_ADDRESS_Owner, ABIS2, signer);
+        const contract = new ethers.Contract('0x06C96F03934c7799FEae82f62F887BdC9dD5f1fE', ABIS2, signer);
         const mintSig = await contract.linkAdsSpotToContent(formData.spot, formData.content); //link spot content id
         const receipt = await mintSig.wait();
         console.log(receipt);

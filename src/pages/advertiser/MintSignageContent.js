@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 
 //---------------------WorldCoin
 import { CredentialType, IDKitWidget } from "@worldcoin/idkit"
-import { ethers } from "ethers";
 import ABIS from '../../abis/ABIS.json';
 
 //@mui  
@@ -13,7 +12,10 @@ import { Card, TextField, Typography, Stack, Grid, Button, Box } from '@mui/mate
 
 
 
+
 const MintSignageContent = () => {
+
+  const ethers = require("ethers");
 
   const { isConnected, address } = useAccount(); 
   const [formData, setFormData] = useState({uri: ''});
@@ -35,6 +37,11 @@ const MintSignageContent = () => {
     
   }
 
+
+  //------------------------------------
+
+  
+ 
   async function Mint(e) {
 
     e.preventDefault();
@@ -43,18 +50,18 @@ const MintSignageContent = () => {
     try{
 
     setLoading(true)
-    const proof = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], data.proof)[0];
-    const signal = process.env.REACT_APP_WORLD_COIN_SIGNAL;
-    const root = data.merkle_root;
-    const nullifierHash = data.nullifier_hash;
+
+    
+   
     const userAddress = address;
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const contract = new ethers.Contract(process.env.REACT_APP_SIGNAGE_CONTRACT_ADDRESS, ABIS, signer);
-    const verifyAndExecute = await contract.verifyAndExecute(signal, root, nullifierHash, proof, userAddress, formData.uri);
+    const contract = new ethers.Contract('0xf70B47083c49F192e8DBe9c2612dc9cFE77830BB', ABIS, signer);
+
+    const verifyAndExecute = await contract.safeMintForDebugging(userAddress, formData.uri);
     const receipt = await verifyAndExecute.wait();
-    console.log(receipt);
+    
 
     setLoading(false)
     setFormData({uri: ''})
@@ -82,7 +89,7 @@ const MintSignageContent = () => {
    
     <Card sx={{ p: 3, boxShadow: 3 }}>
       <Typography variant="subtitle1" gutterBottom>
-        Please Verfiy to Upload Content
+        {data !== null ? <>Mint your Content for Signage</> : <>Please Verfiy to Upload Content</>}
       </Typography>
 
 

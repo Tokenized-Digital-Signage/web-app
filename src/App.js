@@ -7,12 +7,11 @@ import ThemeProvider from './theme';
 
 import { chain, WagmiConfig, createClient, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 
 
 
-const { chains, provider, webSocketProvider } = configureChains([chain.polygonMumbai], [
+const { chains, provider, webSocketProvider } = configureChains([chain.polygon], [
   publicProvider(), //not to use in production
 ])
 
@@ -20,18 +19,6 @@ const client = createClient({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({ chains }),
-    // new WalletConnectConnector({
-    //   chains,
-    //   options: {
-    //     qrcode: true,
-    //   },
-    // }),
-    // new CoinbaseWalletConnector({
-    //   chains,
-    //   options: {
-    //     appName: 'Signage',
-    //   },
-    // }),
   ],
   provider,
   webSocketProvider,

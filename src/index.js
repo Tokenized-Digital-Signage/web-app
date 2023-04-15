@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom'
 import './index.css';
@@ -8,7 +8,9 @@ import App from './App';
 import { SettingsProvider } from './contexts/SettingsContext';
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 
-ReactDOM.render(
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
     <HelmetProvider>
     <SettingsProvider>
       <CollapseDrawerProvider>
@@ -18,5 +20,4 @@ ReactDOM.render(
       </CollapseDrawerProvider>
     </SettingsProvider>
     </HelmetProvider>,
-  document.getElementById('root')
 );
