@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+
+import { useDisconnect } from 'wagmi'
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, Button } from '@mui/material';
@@ -54,6 +56,12 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
   const isOffset = useOffSetTop(HEADER.DASHBOARD_DESKTOP_HEIGHT) && !verticalLayout;
 
   const isDesktop = useResponsive('up', 'lg');
+  const { disconnect } = useDisconnect();
+
+  function disconnected () {
+    disconnect()
+    localStorage.clear();
+  }
 
   return (
     <RootStyle isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
@@ -74,7 +82,7 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <Button></Button>
+          <Button variant="outlined" onClick={disconnected}>Disconnect</Button>
         </Stack>
       </Toolbar>
     </RootStyle>

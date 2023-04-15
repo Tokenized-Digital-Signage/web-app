@@ -72,7 +72,8 @@ const Connect = () => {
                   
                   <Button
                   key={connector.id}
-                  startIcon={<img alt="Metamask Icon" height={26} width={26} src={connector.name === 'MetaMask' ? "/icons/metamask.svg" : connector.name === 'WalletConnect' ? "/icons/walletconnect.svg" : connector.name === 'Coinbase Wallet' ? "/icons/coinbase.svg" : null} />} fullWidth size="large" variant='outlined'
+                  // startIcon={<img alt="Metamask Icon" height={26} width={26} src={connector.name === 'MetaMask' ? "/icons/metamask.svg" : connector.name === 'WalletConnect' ? "/icons/walletconnect.svg" : connector.name === 'Coinbase Wallet' ? "/icons/coinbase.svg" : null} />} 
+                  fullWidth size="large" variant='outlined'
                   onClick={() => connect({ connector })}
                   sx={{mb: 1.5}}
                 >
